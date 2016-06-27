@@ -31,6 +31,10 @@ set ruler
 " Press space to clear search highlighting and any message already displayed.
 nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
 
+" =================================================================
+" I enable mouse support because I'm a heathen and not a masochist.
+" ==================================================================
+
 " Send more characters for redraws
 set ttyfast
 
