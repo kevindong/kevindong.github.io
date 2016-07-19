@@ -235,21 +235,21 @@ hr.small {
 	padding: 50px 0;
 }
 
-/* Services */
+/* Links */
 
-.services {
+.links {
 	padding: 50px 0;
 }
 
-.service-item {
+.link-item {
 	margin-bottom: 30px;
 }
 
-.service-item > a {
+.link-item > a {
 	color: white;
 }
 
-.service-item > p > a {
+.link-item > p > a {
 	color: white;
 }
 
