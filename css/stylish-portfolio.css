@@ -286,6 +286,10 @@ hr.small {
 	opacity: 0.8;
 }
 
+.portfolio-item-description {
+	margin-bottom: 30px;
+}
+
 .portfolio-item-description > p {
 	text-align: left;
 }
