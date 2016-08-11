@@ -231,7 +231,7 @@ hr.small {
 
 /* Sections */
 
-.section {
+section {
 	padding: 50px 0;
 }
 
@@ -245,6 +245,14 @@ hr.small {
 
 .section-item > p > a {
 	color: white;
+}
+
+.section > .container > .row > .col-lg-12 > hr {
+	border-top: 1px solid black;
+}
+
+.bg-primary > .container > .row > .col-lg-12 > hr {
+	border-top: 1px solid white;
 }
 
 /* Callout */
@@ -262,10 +270,6 @@ hr.small {
 }
 
 /* Portfolio */
-
-.portfolio {
-	padding: 50px 0;
-}
 
 .portfolio-item {
 	margin-bottom: 30px;
