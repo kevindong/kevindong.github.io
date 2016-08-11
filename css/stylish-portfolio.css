@@ -229,27 +229,21 @@ hr.small {
 	color: white;
 }
 
-/* About */
+/* Sections */
 
-.about {
+.section {
 	padding: 50px 0;
 }
 
-/* Links */
-
-.links {
-	padding: 50px 0;
-}
-
-.link-item {
+.section-item {
 	margin-bottom: 30px;
 }
 
-.link-item > a {
+.section-item > a {
 	color: white;
 }
 
-.link-item > p > a {
+.section-item > p > a {
 	color: white;
 }
 
