@@ -180,6 +180,10 @@ section > .container > .row > .col-lg-12 > hr {
 	border-top: 1px solid white;
 }
 
+.section-item > p > a {
+	text-decoration: underline;
+}
+
 /* Portfolio */
 
 .portfolio-item {
