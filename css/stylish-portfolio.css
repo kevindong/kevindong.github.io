@@ -144,6 +144,16 @@ hr.small {
 	color: white;
 }
 
+.header a {
+	text-decoration: underline;
+	color: white;
+}
+
+.header-shade {
+	background-color: rgba(0,0,0,0.5);
+	background-blend-mode: overlay;
+}
+
 /* Sections */
 
 section {
