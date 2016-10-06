@@ -1,16 +1,17 @@
-" takes advantage of vim improvements on vi
+" Takes advantage of vim improvements on vi
 set nocompatible
 
-" make backspace work as expected
+" Make backspace work as expected
 set backspace=eol,start,indent
 
+" Just __slightly__ important
 syntax on
 
-" search as you type
-set incsearch
+" Always set auto-indenting on
+set ai
 
-" disable search result highlighting
-"set nohls
+" Search as you type
+set incsearch
 
 " enable search result highlighting
 set hlsearch
