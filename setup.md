@@ -1,7 +1,7 @@
 # Setup Instructions (Linux)
 
 # Automatic
-Either: 1) copy paste the following or 2) run `curl -L kevindong.net/setup.sh -o ./setup.sh`, `chmod +x setup.sh`, and then `./setup.sh`
+Either: 1) copy paste the following or 2) run `wget kevindong.net/setup.sh`, `chmod +x setup.sh`, and then `./setup.sh`
 
 ```
 sudo apt-get install zsh vim gdb valgrind git curl
