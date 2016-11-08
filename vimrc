@@ -45,5 +45,7 @@ set mouse=a
 " Set this to the name of your terminal that supports mouse codes.
 set ttymouse=xterm2
 
-" Display tabs as having a width of 4 spaces
+" Sets 4-space tabs as the universal standard
 set tabstop=4
+set shiftwidth=4
+set softtabstop=4
