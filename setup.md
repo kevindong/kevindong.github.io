@@ -4,7 +4,8 @@
 Either: 1) copy paste the following or 2) run `wget kevindong.net/setup.sh`, `chmod +x setup.sh`, and then `./setup.sh`
 
 ```
-sudo apt-get install zsh vim gdb valgrind git curl
+sudo apt update
+sudo apt install zsh vim gdb valgrind git curl
 curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
 vim ~/.zshrc
@@ -16,8 +17,9 @@ ssh-copy-id dong70@data.cs.purdue.edu
 ```
 
 ## Manual
-### apt-get packages
-* `sudo apt-get install zsh vim gdb valgrind git curl`
+### apt packages
+* `sudo apt update`
+* `sudo apt install zsh vim gdb valgrind git curl`
 
 ### Set up vim
 * `curl -L kevindong.net/vimrc -o ~/.vimrc`

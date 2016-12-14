@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo apt update
 sudo apt-get install zsh vim gdb valgrind git curl
 curl -L http://install.ohmyz.sh | sh
 chsh -s /bin/zsh
