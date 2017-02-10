@@ -19,7 +19,10 @@
 			const rawStart = document.getElementById('start').value.split(':');
 			const rawEnd = document.getElementById('end').value.split(':');
 			const start = (parseInt(rawStart[0]) * 60) + parseInt(rawStart[1]);
-			const end = (parseInt(rawEnd[0]) * 60) + parseInt(rawEnd[1]);
+			let end = (parseInt(rawEnd[0]) * 60) + parseInt(rawEnd[1]);
+			if (start > end) {
+				end += 1440;
+			}
 			const diffRaw = Math.abs(end - start);
 			const diffMin = diffRaw % 60 < 10 ? '0' + (diffRaw % 60) : diffRaw % 60;
 			const diff = Math.abs(Math.floor(diffRaw / 60)) + ':' + diffMin;
@@ -54,12 +57,9 @@
 		<td><button type="button" onclick="calculate()">Calculate</button></td>
 	</tr>
 </table>
-<p>
-The 'Start' and 'End' labels are a misnomer. It's really just calculating the shortest way to get from one time value to the other.
-</p>
 
 <p>
-Also, please don't judge my abilites based on this. I understand my code is bad and I do feel bad... But I feel worse using <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and loading a ~900 KB page over ~9 seconds on a 200 Mb/s connection. 
+Please don't judge my abilites based on this. I understand my code is bad and I do feel bad... But I feel worse using <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and loading a ~900 KB page over ~9 seconds on a 200 Mb/s connection. 
 </p>
 
 <script>
