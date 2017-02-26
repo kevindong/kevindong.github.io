@@ -8,6 +8,7 @@
 		}
 		input, button {
 			font-size: inherit;
+			color: black;
 		}
 	</style>
 	<script type="text/javascript">
@@ -15,32 +16,61 @@
 			document.getElementById(id).value = currentTime();
 		}
 
-		function calculate() {
-			const rawStart = document.getElementById('start').value.split(':');
-			const rawEnd = document.getElementById('end').value.split(':');
-			const start = (parseInt(rawStart[0]) * 60) + parseInt(rawStart[1]);
-			let end = (parseInt(rawEnd[0]) * 60) + parseInt(rawEnd[1]);
-			if (start > end) {
+		function convertToMinutes(rawValue) {
+			const raw = rawValue.split(':');
+			const minutes = (parseInt(raw[0]) * 60) + parseInt(raw[1]);
+			return minutes;
+		}
+
+		function calculateDiff() {
+			const start = convertToMinutes(document.getElementById('start').value);
+			let end = convertToMinutes(document.getElementById('end').value);
+			while (start > end) {
 				end += 1440;
 			}
 			const diffRaw = Math.abs(end - start);
 			const decimalizedDiffRaw = (diffRaw / 60.0).toFixed(1);
-			const diffMin = diffRaw % 60 < 10 ? '0' + (diffRaw % 60) : diffRaw % 60;
-			const diff = Math.abs(Math.floor(diffRaw / 60)) + ':' + diffMin;
-			document.getElementById('difference').innerHTML = diff + ' / ' + decimalizedDiffRaw;
+			document.getElementById('difference').innerHTML = convertToFormat(diffRaw) + ' / ' + decimalizedDiffRaw;
 		}
 
 		function currentTime() {
 			const date = new Date();
-			const hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-			const minute = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-			const time = hour + ':' + minute;
-			return time;
+			const time = convertToMinutes(date.getHours() + ":" + date.getMinutes());
+			return convertToFormat(time, true);
+		}
+
+		function convertToFormat(input, padding) {
+			while (input < 0) {
+				input += 1440;
+			}
+			let hours = Math.floor(input / 60);
+			if (hours < 10 && padding) {
+				hours = '0' + hours;
+			}
+			let minutes = (input % 60);
+			if (minutes < 10) {
+				minutes = '0' + minutes;
+			}
+			return hours + ":" + minutes;
+		}
+
+		function calculateValue() {
+			const initial = convertToMinutes(document.getElementById('initial').value);
+			let value = convertToMinutes(document.getElementById('value').value);
+			if (document.getElementById('subtract').checked) {
+				value = -value;
+			}
+			const result = (initial + value) % 1440;
+			document.getElementById('valueDiff').value = convertToFormat(result, true);
 		}
 	</script>
 </head>
 <body>
-<h1>Simple Time Difference Calculator</h1>
+<h1>Simple Time Calculator</h1>
+
+<hr>
+
+<h2>Difference in Time</h2>
 <table>
 	<tr>
 		<td>Start:</td>
@@ -55,16 +85,49 @@
 	<tr>
 		<td>Difference:</td>
 		<td><div id="difference"></div></td>
-		<td><button type="button" onclick="calculate()">Calculate</button></td>
+		<td><button type="button" onclick="calculateDiff()">Calculate</button></td>
 	</tr>
 </table>
 
+<hr>
+
+<h2>Add/Subtract Value to Time</h2>
+<p>Format all value inputs as "[hours]:[minutes]".</p>
+<table>
+	<tr>
+		<td>Initial:</td>
+		<td><input type="time" id="initial"></td>
+		<td><button type="button" onclick="fillInCurrentItem('initial')">Now</button></td>
+	</tr>
+	<tr>
+		<td>Action:</td>
+		<td><input type="radio" name="action" id="add" checked> Add</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input type="radio" name="action" id="subtract"> Subtract</td>
+	</tr>
+	<tr>
+		<td>Value:</td>
+		<td><input id="value" value="0:00" size="5"></td>
+	</tr>
+	<tr>
+		<td>Final:</td>
+		<td><input type="time" id="valueDiff" disabled></td>
+		<td><button type="button" onclick="calculateValue()">Calculate</button></td>
+	</tr>
+</table>
+
+<hr>
+
 <p>
-Not my finest work, but it does work. And it's ultra light-weight. As opposed to <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and taking ~9 seconds to load a ~900 KB page on a ~200 Mbps connection.</p>
+Not my finest work, but it does work. And it's ultra light-weight. As opposed to <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and taking ~9 seconds to load a ~900 KB page on a ~200 Mbps connection.
+</p>
 
 <script>
 	document.getElementById('start').defaultValue = currentTime();
-	calculate();
+	document.getElementById('initial').defaultValue = currentTime();
+	calculateDiff();
 </script>
 </body>
 </html>
