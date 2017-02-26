@@ -24,9 +24,10 @@
 				end += 1440;
 			}
 			const diffRaw = Math.abs(end - start);
+			const decimalizedDiffRaw = (diffRaw / 60.0).toFixed(1);
 			const diffMin = diffRaw % 60 < 10 ? '0' + (diffRaw % 60) : diffRaw % 60;
 			const diff = Math.abs(Math.floor(diffRaw / 60)) + ':' + diffMin;
-			document.getElementById('difference').innerHTML = diff;
+			document.getElementById('difference').innerHTML = diff + ' / ' + decimalizedDiffRaw;
 		}
 
 		function currentTime() {
@@ -59,8 +60,7 @@
 </table>
 
 <p>
-Please don't judge my abilites based on this. I understand my code is bad and I do feel bad... But I feel worse using <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and loading a ~900 KB page over ~9 seconds on a 200 Mb/s connection. 
-</p>
+Not my finest work, but it does work. And it's ultra light-weight. As opposed to <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and taking ~9 seconds to load a ~900 KB page on a ~200 Mbps connection.</p>
 
 <script>
 	document.getElementById('start').defaultValue = currentTime();
