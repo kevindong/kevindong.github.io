@@ -56,7 +56,13 @@
 
 		function calculateValue() {
 			const initial = convertToMinutes(document.getElementById('initial').value);
-			let value = convertToMinutes(document.getElementById('value').value);
+			let rawValue = document.getElementById('value').value;
+			let value;
+			if (rawValue.includes(':')) {
+				value = convertToMinutes(rawValue);
+			} else {
+				value = rawValue * 60;
+			}
 			if (document.getElementById('subtract').checked) {
 				value = -value;
 			}
@@ -92,7 +98,7 @@
 <hr>
 
 <h2>Add/Subtract Value to Time</h2>
-<p>Format all value inputs as "[hours]:[minutes]".</p>
+<p>Format all value inputs as either "[hours]:[minutes]" (such as 2:10, which represents 2 hours and 10 minutes) or "[hours]" (such as 2.5 or 5, which represents 2.5 hours and 5 hours, respectively).</p>
 <table>
 	<tr>
 		<td>Initial:</td>
