@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 		table {
-			font-size: 1.5em;
+			font-size: 1.15em;
 		}
 		input, button {
 			font-size: inherit;
@@ -29,7 +29,7 @@
 				end += 1440;
 			}
 			const diffRaw = Math.abs(end - start);
-			const decimalizedDiffRaw = (diffRaw / 60.0).toFixed(1);
+			const decimalizedDiffRaw = (diffRaw / 60).toFixed(1);
 			document.getElementById('difference').innerHTML = convertToFormat(diffRaw) + ' / ' + decimalizedDiffRaw;
 		}
 
@@ -47,7 +47,7 @@
 			if (hours < 10 && padding) {
 				hours = '0' + hours;
 			}
-			let minutes = (input % 60);
+			let minutes = (input % 60).toFixed(0);
 			if (minutes < 10) {
 				minutes = '0' + minutes;
 			}
@@ -69,6 +69,24 @@
 			const result = (initial + value) % 1440;
 			document.getElementById('valueDiff').value = convertToFormat(result, true);
 		}
+
+		function checkVersion() {
+			const currentVersion = "0.0.1";
+			if (localStorage.length === 0) {
+				localStorage["version"] = currentVersion;
+			} else {
+				if (localStorage["version"] !== currentVersion) {
+					localStorage.clear();
+					console.log("Your settings were cleared.");
+					localStorage.version = currentVersion;
+				}
+			}
+		}
+
+		function setDefault(tag) {
+			localStorage[tag] = document.getElementById(tag).value;
+			console.log(localStorage[tag]);
+		}
 	</script>
 </head>
 <body>
@@ -82,11 +100,13 @@
 		<td>Start:</td>
 		<td><input type="time" id="start"></td>
 		<td><button type="button" onclick="fillInCurrentItem('start')">Now</button></td>
+		<td><button type="button" onclick="setDefault('start')">Set Default</button></td>
 	</tr>
 	<tr>
 		<td>End:</td>
-		<td><input type="time" id="end" value="10:30"></td>
+		<td><input type="time" id="end"></td>
 		<td><button type="button" onclick="fillInCurrentItem('end')">Now</button></td>
+		<td><button type="button" onclick="setDefault('end')">Set Default</button></td>
 	</tr>
 	<tr>
 		<td>Difference:</td>
@@ -104,6 +124,7 @@
 		<td>Initial:</td>
 		<td><input type="time" id="initial"></td>
 		<td><button type="button" onclick="fillInCurrentItem('initial')">Now</button></td>
+		<td><button type="button" onclick="setDefault('initial')">Set Default</button></td>
 	</tr>
 	<tr>
 		<td>Action:</td>
@@ -131,8 +152,17 @@ Not my finest work, but it does work. And it's ultra light-weight. As opposed to
 </p>
 
 <script>
-	document.getElementById('start').defaultValue = currentTime();
-	document.getElementById('initial').defaultValue = currentTime();
+	checkVersion();
+
+	const elements = ["start", "end", "initial"];
+	elements.forEach(item => {
+		if (localStorage[item] === undefined) {
+			document.getElementById(item).value = currentTime();
+		} else {
+			document.getElementById(item).value = localStorage[item];
+		}
+	})
+
 	calculateDiff();
 </script>
 </body>
