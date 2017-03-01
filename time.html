@@ -1,14 +1,28 @@
 <html>
 <head>
-	<title>Simple Time Difference Calculator</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Time Calculator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
 	<style>
+		body {
+			margin: 1em auto;
+			max-width: 45em;
+			font-family: sans-serif;
+			line-height: 1.2;
+			padding: 0.5em;
+		}
+		.allow-overflow {
+			overflow-x: auto;
+			-webkit-overflow-scrolling: touch;
+		}
 		table {
-			font-size: 1.15em;
+			white-space: nowrap;
 		}
 		input, button {
 			font-size: inherit;
-			color: black;
+		}
+		button {
+			background-color: white;
+			border: 1px solid black;
 		}
 	</style>
 	<script type="text/javascript">
@@ -107,14 +121,19 @@
 			localStorage[tag] = document.getElementById(tag).value;
 			console.log(localStorage[tag]);
 		}
+
+		function resetSettings() {
+			localStorage.clear();
+		}
 	</script>
 </head>
 <body>
-<h1>Simple Time Calculator</h1>
+<h1>Time Calculator</h1>
 
 <hr>
 
 <h2>Difference in Time</h2>
+<div class="allow-overflow">
 <table>
 	<tr>
 		<td>Start:</td>
@@ -129,16 +148,18 @@
 		<td><button type="button" onclick="setDefault('end')">Set Default</button></td>
 	</tr>
 	<tr>
-		<td>Difference:</td>
+		<td>Diff:</td>
 		<td><div id="difference"></div></td>
 		<td><button type="button" onclick="calculateDiff()">Calculate</button></td>
 	</tr>
 </table>
+</div>
 
 <hr>
 
 <h2>Add/Subtract Value to Time</h2>
 <p>Format all value inputs as either "[hours]:[minutes]" (such as 2:10, which represents 2 hours and 10 minutes) or "[hours]" (such as 2.5 or 5, which represents 2.5 hours and 5 hours, respectively).</p>
+<div class="allow-overflow">
 <table>
 	<tr>
 		<td>Initial:</td>
@@ -164,6 +185,7 @@
 		<td><button type="button" onclick="calculateValue()">Calculate</button></td>
 	</tr>
 </table>
+</div>
 
 <hr>
 
@@ -172,6 +194,7 @@
 If you want to calculate the duration without the time component, fill in "12:00:00 AM" (it actually doesn't matter what the time is as long as the time in both fields are the same).
 <p>
 
+<div class="allow-overflow">
 <table>
 	<tr>
 		<td>First:</td>
@@ -189,12 +212,15 @@ If you want to calculate the duration without the time component, fill in "12:00
 		<td valign="top"><button type="button" onclick="calculateDuration()">Calculate</button></td>
 	</tr>
 </table>
+</div>
 
 <hr>
 
 <p>
 Not my finest work, but it does work. And it's ultra light-weight. As opposed to <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and taking ~9 seconds to load a ~900 KB page on a ~200 Mbps connection.
 </p>
+
+<button type="button" onclick="resetSettings()">Reset All Settings</button>
 
 <script>
 	checkVersion();
