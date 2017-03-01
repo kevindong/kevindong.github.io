@@ -16,6 +16,26 @@
 			document.getElementById(id).value = currentTime();
 		}
 
+		function fillInDate(id) {
+			document.getElementById(id).value = new Date().toJSON().substring(0, 19);
+		}
+
+		function calculateDuration() {
+			const first = new Date(document.getElementById('first').value);
+			const second = new Date(document.getElementById('second').value);
+			console.log
+			const msDiff = second - first;
+			let output = "";
+			output += (msDiff / 1000) + " seconds</br>";
+			output += (msDiff / 1000 / 60).toFixed(0) + " minutes</br>";
+			output += (msDiff / 1000 / 60 / 60).toFixed(1) + " hours</br>";
+			output += (msDiff / 1000 / 60 / 60 / 24).toFixed(1) + " days</br>";
+			output += (msDiff / 1000 / 60 / 60 / 24 / 7).toFixed(0) + " weeks</br>";
+			output += (msDiff / 1000 / 60 / 60 / 24 / 30).toFixed(1) + " months</br>";
+			output += (msDiff / 1000 / 60 / 60 / 24 / 365).toFixed(1) + " years</br>";
+			document.getElementById('duration').innerHTML = output;
+		}
+
 		function convertToMinutes(rawValue) {
 			const raw = rawValue.split(':');
 			const minutes = (parseInt(raw[0]) * 60) + parseInt(raw[1]);
@@ -142,6 +162,31 @@
 		<td>Final:</td>
 		<td><input type="time" id="valueDiff" disabled></td>
 		<td><button type="button" onclick="calculateValue()">Calculate</button></td>
+	</tr>
+</table>
+
+<hr>
+
+<h2>Duration in Dates/Times</h2>
+<p>
+If you want to calculate the duration without the time component, fill in "12:00:00 AM" (it actually doesn't matter what the time is as long as the time in both fields are the same).
+<p>
+
+<table>
+	<tr>
+		<td>First:</td>
+		<td><input type="datetime-local" id="first"></td>
+		<td><button type="button" onclick="fillInDate('first')">Now</button></td>
+	</tr>
+	<tr>
+		<td>Second:</td>
+		<td><input type="datetime-local" id="second"></td>
+		<td><button type="button" onclick="fillInDate('second')">Now</button></td>
+	</tr>
+	<tr>
+		<td valign="top">Duration:</td>
+		<td><div id="duration"></div></td>
+		<td valign="top"><button type="button" onclick="calculateDuration()">Calculate</button></td>
 	</tr>
 </table>
 
