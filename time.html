@@ -31,7 +31,9 @@
 		}
 
 		function fillInDate(id) {
-			document.getElementById(id).value = new Date().toJSON().substring(0, 19);
+			let date = new Date();
+			date.setHours(date.getHours() - date.getTimezoneOffset() / 60);
+			document.getElementById(id).value = date.toJSON().substring(0, 19);
 		}
 
 		function calculateDuration() {
