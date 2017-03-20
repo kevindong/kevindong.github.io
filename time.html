@@ -26,30 +26,48 @@
 		}
 	</style>
 	<script type="text/javascript">
+		function currentTime() {
+			const date = new Date();
+			const time = convertToMinutes(date.getHours() + ":" + date.getMinutes());
+			return convertToFormat(time, true);
+		}
+		
 		function fillInCurrentItem(id) {
 			document.getElementById(id).value = currentTime();
 		}
 
 		function fillInDate(id) {
-			let date = new Date();
-			date.setHours(date.getHours() - date.getTimezoneOffset() / 60);
-			document.getElementById(id).value = date.toJSON().substring(0, 19);
+			const now = new Date();
+			now.setHours(now.getHours() - now.getTimezoneOffset() / 60);
+			let date = "";
+			date += now.getFullYear() + "-";
+			if (((now.getMonth() + 1) % 13).toString().length == 1) {
+				date += "0";
+			}
+			date += ((now.getMonth() + 1) % 13) + "-";
+			date += now.getDate();
+			document.getElementById(id).value = date;
+		}
+		
+		function fillInDateTime(id) {
+			let now = new Date();
+			now.setHours(now.getHours() - now.getTimezoneOffset() / 60);
+			document.getElementById(id).value = now.toJSON().substring(0, 19);
 		}
 
-		function calculateDuration() {
-			const first = new Date(document.getElementById('first').value);
-			const second = new Date(document.getElementById('second').value);
-			console.log
+		function calculateDuration(id) {
+			const first = new Date(document.getElementById(id + '_start').value);
+			const second = new Date(document.getElementById(id + '_end').value);
 			const msDiff = second - first;
 			let output = "";
-			output += (msDiff / 1000) + " seconds</br>";
+			output += (msDiff / 1000).toFixed(0) + " seconds</br>";
 			output += (msDiff / 1000 / 60).toFixed(0) + " minutes</br>";
 			output += (msDiff / 1000 / 60 / 60).toFixed(1) + " hours</br>";
 			output += (msDiff / 1000 / 60 / 60 / 24).toFixed(1) + " days</br>";
 			output += (msDiff / 1000 / 60 / 60 / 24 / 7).toFixed(0) + " weeks</br>";
 			output += (msDiff / 1000 / 60 / 60 / 24 / 30).toFixed(1) + " months</br>";
 			output += (msDiff / 1000 / 60 / 60 / 24 / 365).toFixed(1) + " years</br>";
-			document.getElementById('duration').innerHTML = output;
+			document.getElementById(id + '_duration').innerHTML = output;
 		}
 
 		function convertToMinutes(rawValue) {
@@ -59,20 +77,14 @@
 		}
 
 		function calculateDiff() {
-			const start = convertToMinutes(document.getElementById('start').value);
-			let end = convertToMinutes(document.getElementById('end').value);
+			const start = convertToMinutes(document.getElementById('time_start').value);
+			let end = convertToMinutes(document.getElementById('time_end').value);
 			while (start > end) {
 				end += 1440;
 			}
 			const diffRaw = Math.abs(end - start);
 			const decimalizedDiffRaw = (diffRaw / 60).toFixed(1);
-			document.getElementById('difference').innerHTML = convertToFormat(diffRaw) + ' / ' + decimalizedDiffRaw;
-		}
-
-		function currentTime() {
-			const date = new Date();
-			const time = convertToMinutes(date.getHours() + ":" + date.getMinutes());
-			return convertToFormat(time, true);
+			document.getElementById('time_diff').innerHTML = convertToFormat(diffRaw) + ' / ' + decimalizedDiffRaw;
 		}
 
 		function convertToFormat(input, padding) {
@@ -91,8 +103,8 @@
 		}
 
 		function calculateValue() {
-			const initial = convertToMinutes(document.getElementById('initial').value);
-			let rawValue = document.getElementById('value').value;
+			const initial = convertToMinutes(document.getElementById('time_value_initial').value);
+			let rawValue = document.getElementById('time_value_value').value;
 			let value;
 			if (rawValue.includes(':')) {
 				value = convertToMinutes(rawValue);
@@ -103,11 +115,11 @@
 				value = -value;
 			}
 			const result = (initial + value) % 1440;
-			document.getElementById('valueDiff').value = convertToFormat(result, true);
+			document.getElementById('time_value_valueDiff').value = convertToFormat(result, true);
 		}
 
 		function checkVersion() {
-			const currentVersion = "0.0.1";
+			const currentVersion = "March 20, 2017 at 2:03:45 AM ET";
 			if (localStorage.length === 0) {
 				localStorage["version"] = currentVersion;
 			} else {
@@ -121,7 +133,7 @@
 
 		function setDefault(tag) {
 			localStorage[tag] = document.getElementById(tag).value;
-			console.log(localStorage[tag]);
+			console.log("Set tag \"" + tag + "\" to: " + localStorage[tag]);
 		}
 
 		function resetSettings() {
@@ -131,7 +143,7 @@
 </head>
 <body>
 <h1>Time Calculator</h1>
-
+This works best on most mobile browsers and desktop Google Chrome/Chromium (because of their built in date/time pickers).
 <hr>
 
 <h2>Difference in Time</h2>
@@ -139,19 +151,19 @@
 <table>
 	<tr>
 		<td>Start:</td>
-		<td><input type="time" id="start"></td>
-		<td><button type="button" onclick="fillInCurrentItem('start')">Now</button></td>
-		<td><button type="button" onclick="setDefault('start')">Set Default</button></td>
+		<td><input type="time" id="time_start"></td>
+		<td><button type="button" onclick="fillInCurrentItem('time_start')">Now</button></td>
+		<td><button type="button" onclick="setDefault('time_start')">Set Default</button></td>
 	</tr>
 	<tr>
 		<td>End:</td>
-		<td><input type="time" id="end"></td>
-		<td><button type="button" onclick="fillInCurrentItem('end')">Now</button></td>
-		<td><button type="button" onclick="setDefault('end')">Set Default</button></td>
+		<td><input type="time" id="time_end"></td>
+		<td><button type="button" onclick="fillInCurrentItem('time_end')">Now</button></td>
+		<td><button type="button" onclick="setDefault('time_end')">Set Default</button></td>
 	</tr>
 	<tr>
 		<td>Diff:</td>
-		<td><div id="difference"></div></td>
+		<td><div id="time_diff"></div></td>
 		<td><button type="button" onclick="calculateDiff()">Calculate</button></td>
 	</tr>
 </table>
@@ -165,9 +177,9 @@
 <table>
 	<tr>
 		<td>Initial:</td>
-		<td><input type="time" id="initial"></td>
-		<td><button type="button" onclick="fillInCurrentItem('initial')">Now</button></td>
-		<td><button type="button" onclick="setDefault('initial')">Set Default</button></td>
+		<td><input type="time" id="time_value_initial"></td>
+		<td><button type="button" onclick="fillInCurrentItem('time_value_initial')">Now</button></td>
+		<td><button type="button" onclick="setDefault('time_value_initial')">Set Default</button></td>
 	</tr>
 	<tr>
 		<td>Action:</td>
@@ -179,11 +191,11 @@
 	</tr>
 	<tr>
 		<td>Value:</td>
-		<td><input id="value" value="0:00" size="5"></td>
+		<td><input id="time_value_value" value="0:00" size="5"></td>
 	</tr>
 	<tr>
 		<td>Final:</td>
-		<td><input type="time" id="valueDiff" disabled></td>
+		<td><input type="time" id="time_value_valueDiff" disabled></td>
 		<td><button type="button" onclick="calculateValue()">Calculate</button></td>
 	</tr>
 </table>
@@ -191,27 +203,46 @@
 
 <hr>
 
-<h2>Duration in Dates/Times</h2>
-<p>
-If you want to calculate the duration without the time component, fill in "12:00:00 AM" (it actually doesn't matter what the time is as long as the time in both fields are the same).
-<p>
-
+<h2>Duration in Dates</h2>
 <div class="allow-overflow">
 <table>
 	<tr>
-		<td>First:</td>
-		<td><input type="datetime-local" id="first"></td>
-		<td><button type="button" onclick="fillInDate('first')">Now</button></td>
+		<td>Start:</td>
+		<td><input type="date" id="date_start"></td>
+		<td><button type="button" onclick="fillInDate('date_start')">Now</button></td>
 	</tr>
 	<tr>
-		<td>Second:</td>
-		<td><input type="datetime-local" id="second"></td>
-		<td><button type="button" onclick="fillInDate('second')">Now</button></td>
+		<td>End:</td>
+		<td><input type="date" id="date_end"></td>
+		<td><button type="button" onclick="fillInDate('date_end')">Now</button></td>
 	</tr>
 	<tr>
 		<td valign="top">Duration:</td>
-		<td><div id="duration"></div></td>
-		<td valign="top"><button type="button" onclick="calculateDuration()">Calculate</button></td>
+		<td><div id="date_duration"></div></td>
+		<td valign="top"><button type="button" onclick="calculateDuration('date')">Calculate</button></td>
+	</tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Duration in Dates/Times</h2>
+<div class="allow-overflow">
+<table>
+	<tr>
+		<td>Start:</td>
+		<td><input type="datetime-local" id="datetime_start"></td>
+		<td><button type="button" onclick="fillInDateTime('datetime_start')">Now</button></td>
+	</tr>
+	<tr>
+		<td>End:</td>
+		<td><input type="datetime-local" id="datetime_end"></td>
+		<td><button type="button" onclick="fillInDateTime('datetime_end')">Now</button></td>
+	</tr>
+	<tr>
+		<td valign="top">Duration:</td>
+		<td><div id="datetime_duration"></div></td>
+		<td valign="top"><button type="button" onclick="calculateDuration('datetime')">Calculate</button></td>
 	</tr>
 </table>
 </div>
@@ -227,7 +258,7 @@ Not my finest work, but it does work. And it's ultra light-weight. As opposed to
 <script>
 	checkVersion();
 
-	const elements = ["start", "end", "initial"];
+	const elements = ["time_start", "time_end", "time_value_initial"];
 	elements.forEach(item => {
 		if (localStorage[item] === undefined) {
 			document.getElementById(item).value = currentTime();
