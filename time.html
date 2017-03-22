@@ -26,6 +26,10 @@
 		}
 	</style>
 	<script type="text/javascript">
+		function invalidInputsAlert() {
+			window.alert("Your inputs are invalid. Please check them, correct them, and try again.");
+		}
+
 		function currentTime() {
 			const date = new Date();
 			const time = convertToMinutes(date.getHours() + ":" + date.getMinutes());
@@ -59,6 +63,10 @@
 			const first = new Date(document.getElementById(id + '_start').value);
 			const second = new Date(document.getElementById(id + '_end').value);
 			const msDiff = second - first;
+			if (isNaN(msDiff)) {
+				invalidInputsAlert();
+				return;
+			}
 			let output = "";
 			output += (msDiff / 1000).toFixed(0) + " seconds</br>";
 			output += (msDiff / 1000 / 60).toFixed(0) + " minutes</br>";
@@ -79,6 +87,10 @@
 		function calculateDiff() {
 			const start = convertToMinutes(document.getElementById('time_start').value);
 			let end = convertToMinutes(document.getElementById('time_end').value);
+			if (isNaN(start) || isNaN(end)) {
+				invalidInputsAlert();
+				return;
+			}
 			while (start > end) {
 				end += 1440;
 			}
@@ -110,6 +122,10 @@
 				value = convertToMinutes(rawValue);
 			} else {
 				value = rawValue * 60;
+			}
+			if (isNaN(initial) || isNaN(value)) {
+				invalidInputsAlert();
+				return;
 			}
 			if (document.getElementById('subtract').checked) {
 				value = -value;
