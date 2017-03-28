@@ -49,3 +49,6 @@ set ttymouse=xterm2
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+
+" Always show horizontal line below current line
+set cursorline
