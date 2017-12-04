@@ -68,10 +68,8 @@ p {
  * https://github.com/l-lin/font-awesome-animation
  * License: MIT
  *
- * IMPORTANT NOTE: This file has been modified to reduce its size by deleting statements I don't use. 
- * If you want the full, unedited version, go to the Github repo linked above.
+ * IMPORTANT NOTE: The following statements were copied and pasted from the library linked above. Go to that repo if you want the full version.
  */
-/* PULSE */
 
 @-webkit-keyframes pulse {
 	0% {
