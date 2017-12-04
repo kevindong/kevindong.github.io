@@ -73,3 +73,9 @@ p {
 a.underline {
   text-decoration: underline;
 }
+
+@media (min-width: 576px) {
+  .add-deck-margin {
+    margin-top: 30px;
+  }
+}
