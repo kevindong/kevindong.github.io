@@ -63,6 +63,10 @@ p {
 	margin-bottom: 0;
 }
 
+a.underline {
+	text-decoration: underline;
+}
+
 /*!
  * font-awesome-animation - v0.1.0
  * https://github.com/l-lin/font-awesome-animation
