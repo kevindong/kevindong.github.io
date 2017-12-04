@@ -38,195 +38,170 @@
 </head>
 
 <body>
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-    <div class="container">
-      <a class="navbar-brand" href="#">Kevin Dong</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#about">About Me</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#work">Work</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#portfolio">Portfolio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#skills">Skills</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
   <div class="header">
-    <div class="container text-center align-middle">
-      <h1>Kevin Dong</h1>
-      <h2>Software Developer</h2>
-      <a href="#about" class="faa-parent animated-hover">
-        <i class="fa fa-angle-double-down faa-pulse" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
-
-  <div class="container lead-section" id="about">
-    <h2 class="section-header">About Me</h2>
-    <p>Hi there, I'm Kevin. I am currently studying computer science at Purdue University. I intend to pursue the Software Engineering
-      track and the Databases track. My primary interest is in software engineering. A secondary topic that fascinates me
-      is data analytics.</p>
-    <p>I have accepted a software engineering internship at Capital One in McLean, Virginia (suburban Washington DC) for Summer
-      2018.
-    </p>
-  </div>
-
-  <div class="container section" id="work">
-    <h2 class="section-header">Work Experience</h2>
-    <div class="card-deck">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Clarity Partners</h4>
-          <h6 class="card-subtitle mb-2 text-muted">Associate Software Engineer Intern—Chicago, IL</h6>
-          <ul class="card-text">
-            <li>Developer on the Chicago Police Department team using C# with ASP.NET MVC and Oracle SQL during Summer 2017.</li>
-            <li>Rewrote multiple data warehouses search applications (originally in Visual Basic) using ASP.NET MVC.</li>
-            <li>Analyzed, architectured, and rewrote web application (originally in Perl) for police lineups. Police lineups
-              are a series of mugshots shown to a victim/witness of a crime wherein the victim/witness will point out a suspect.
-              This process, if conducted fairly, is admissible evidence in court. Work includes database layer, web UI, everything
-              in between, and a robust audit log system.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Krannert Computing Center</h4>
-          <h6 class="card-subtitle mb-2 text-muted">Student Developer—West Lafayette, IN</h6>
-          <ul>
-            <li>Full stack developer on ASP.NET MVC web applications used University-wide. Full time during Summer 2016, part
-              time during academic year 2016-17.</li>
-            <li>Automated tedious and error-prone processes to achieve time savings of &gt;90%.</li>
-            <li>Implemented scheduling appointment capability in a calendar utility used University-wide.</li>
-          </ul>
-        </div>
+    <div class="container">
+      <div class="text-center align-middle">
+        <h1>Kevin Dong</h1>
+        <h2>Software Developer</h2>
+        <a href="#about" class="faa-parent animated-hover">
+          <i class="fa fa-angle-double-down faa-pulse" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
   </div>
+  <div class="container" id="main-content">
+    <div class="lead-section" id="about">
+      <h2 class="section-header">About Me</h2>
+      <p class="mb-2">Hi there, I'm Kevin. I am currently studying computer science at Purdue University. I intend to pursue the Software
+        Engineering track and the Databases track. My primary interest is in software engineering. A secondary topic that
+        fascinates me is data analytics.</p>
+      <p>I have accepted a software engineering internship at Capital One in McLean, Virginia (suburban Washington DC) for Summer
+        2018.
+      </p>
+    </div>
 
-  <div class="container section" id="portfolio">
-    <h2 class="section-header">Portfolio</h2>
-    <div class="card-deck">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="https://github.com/kevindong/citybus_tracker">Citybus Tracker</a>
-          </h4>
-          <p>A bus tracking application written in pure HTML, CSS, and JavaScript. The main feature is that multiple bus stops/routes
-            can be coagulated into one arrivals board, thus enabling the end user to pick the stop/route combo that’s most
-            convenient to them at a particular point in time.</p>
+    <div class="section" id="work">
+      <h2 class="section-header">Work Experience</h2>
+      <div class="card-deck">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Clarity Partners</h4>
+            <h6 class="card-subtitle mb-2">Associate Software Engineer Intern—Chicago, IL</h6>
+            <ul class="card-text">
+              <li>Developer on the Chicago Police Department team using C# with ASP.NET MVC and Oracle SQL during Summer 2017.</li>
+              <li>Rewrote multiple data warehouses search applications (originally in Visual Basic) using ASP.NET MVC.</li>
+              <li>Analyzed, architectured, and rewrote web application (originally in Perl) for police lineups. Police lineups
+                are a series of mugshots shown to a victim/witness of a crime wherein the victim/witness will point out a
+                suspect. This process, if conducted fairly, is admissible evidence in court. Work includes database layer,
+                web UI, everything in between, and a robust audit log system.</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="https://github.com/kevindong/MarketWatch_API">MarketWatch API</a>
-          </h4>
-          <p>An unofficial Python wrapper for programmatically interacting with the stock trading game hosted on MarketWatch.
-            Analyzed and reverse engineered the MarketWatch website to create a lean, robust, and well-documented wrapper.</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="http://www.kevindong.net/QuackCryption">QuackCryption</a>
-          </h4>
-          <p>QuackCryption is a novel approach to data structures, app development, and encryption. QuackCryption encrypts any
-            given file or string into a series of 'quackquack's (with varying capitalization in each letter). It's unquackable!</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">
-            <a href="https://github.com/kevindong/portfolio-tracker">Portfolio Tracker</a>
-          </h4>
-          <p>A serverless web app that will eventually show near-realtime updates of your portfolio's value with an aesthetically
-            pleasing graph. Coded using JavaScript.</p>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Krannert Computing Center</h4>
+            <h6 class="card-subtitle mb-2">Student Developer—West Lafayette, IN</h6>
+            <ul>
+              <li>Full stack developer on ASP.NET MVC web applications used University-wide. Full time during Summer 2016, part
+                time during academic year 2016-17.</li>
+              <li>Automated tedious and error-prone processes to achieve time savings of &gt;90%.</li>
+              <li>Implemented scheduling appointment capability in a calendar utility used University-wide.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container section" id="skills">
-    <h2 class="section-header">Skills</h2>
-    <div class="card-deck">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Good</h4>
-          <p>Java</p>
-          <p class="mb-0">Python</p>
+    <div class="section" id="portfolio">
+      <h2 class="section-header">Portfolio</h2>
+      <div class="card-deck">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="https://github.com/kevindong/citybus_tracker">Citybus Tracker</a>
+            </h4>
+            <p>A bus tracking application written in pure HTML, CSS, and JavaScript. The main feature is that multiple bus stops/routes
+              can be coagulated into one arrivals board, thus enabling the end user to pick the stop/route combo that’s most
+              convenient to them at a particular point in time.</p>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Better</h4>
-          <p>SQL (Microsoft and Oracle)</p>
-          <p class="mb-0">C/C++</p>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="https://github.com/kevindong/MarketWatch_API">MarketWatch API</a>
+            </h4>
+            <p>An unofficial Python wrapper for programmatically interacting with the stock trading game hosted on MarketWatch.
+              Analyzed and reverse engineered the MarketWatch website to create a lean, robust, and well-documented wrapper.</p>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Best</h4>
-          <p>C# with ASP.NET MVC</p>
-          <p class="mb-0">Web Development</p>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="http://www.kevindong.net/QuackCryption">QuackCryption</a>
+            </h4>
+            <p>QuackCryption is a novel approach to data structures, app development, and encryption. QuackCryption encrypts
+              any given file or string into a series of 'quackquack's (with varying capitalization in each letter). It's
+              unquackable!
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="https://github.com/kevindong/portfolio-tracker">Portfolio Tracker</a>
+            </h4>
+            <p>A serverless web app that will eventually show near-realtime updates of your portfolio's value with an aesthetically
+              pleasing graph. Coded using JavaScript.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container section" id="links">
-    <h2 class="section-header">Links</h2>
-    <div class="card-deck text-center">
-      <div class="card">
-        <a href="https://www.github.com/kevindong" class="card-img-top">
-          <i class="fa fa-github"></i>
-        </a>
-        <div class="card-body pt-2">
-          <h4 class="card-title">Github</h4>
-          <p>All of my personal projects are hosted here.</p>
+    <div class="section" id="skills">
+      <h2 class="section-header">Skills</h2>
+      <div class="card-deck">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Good</h4>
+            <p>Java</p>
+            <p class="mb-0">Python</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Better</h4>
+            <p>SQL (Microsoft and Oracle)</p>
+            <p class="mb-0">C/C++</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Best</h4>
+            <p>C# with ASP.NET MVC</p>
+            <p class="mb-0">Web Development</p>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <a href="documents/Kevin_Dong_Resume.pdf" class="card-img-top">
-          <i class="fa fa-file-text"></i>
-        </a>
-        <div class="card-body pt-2">
-          <h4 class="card-title">Resume</h4>
-          <p>Last updated on August 22, 2017.</p>
+    </div>
+
+    <div class="section" id="links">
+      <h2 class="section-header">Links</h2>
+      <div class="card-deck text-center">
+        <div class="card">
+          <a href="https://www.github.com/kevindong" class="card-img-top">
+            <i class="fa fa-github"></i>
+          </a>
+          <div class="card-body pt-2">
+            <h4 class="card-title">Github</h4>
+            <p>All of my personal projects are hosted here.</p>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <a href="https://www.linkedin.com/in/dong70" class="card-img-top">
-          <i class="fa fa-linkedin"></i>
-        </a>
-        <div class="card-body pt-2">
-          <h4 class="card-title">Linkedin</h4>
-          <p>Please feel free to add me.</p>
+        <div class="card">
+          <a href="documents/Kevin_Dong_Resume.pdf" class="card-img-top">
+            <i class="fa fa-file-text"></i>
+          </a>
+          <div class="card-body pt-2">
+            <h4 class="card-title">Resume</h4>
+            <p>Last updated on August 22, 2017.</p>
+          </div>
         </div>
-      </div>
-      <div class="card">
-        <a href="mailto:dong.kevin1@gmail.com" class="card-img-top">
-          <i class="fa fa-envelope"></i>
-        </a>
-        <div class="card-body pt-2">
-          <h4 class="card-title">Email</h4>
-          <p>My personal email. Come at me, email harvesters!</p>
+        <div class="card">
+          <a href="https://www.linkedin.com/in/dong70" class="card-img-top">
+            <i class="fa fa-linkedin"></i>
+          </a>
+          <div class="card-body pt-2">
+            <h4 class="card-title">Linkedin</h4>
+            <p>Please feel free to add me.</p>
+          </div>
+        </div>
+        <div class="card">
+          <a href="mailto:dong.kevin1@gmail.com" class="card-img-top">
+            <i class="fa fa-envelope"></i>
+          </a>
+          <div class="card-body pt-2">
+            <h4 class="card-title">Email</h4>
+            <p>My personal email. Come at me, email harvesters!</p>
+          </div>
         </div>
       </div>
     </div>
