@@ -1,289 +1,311 @@
 <html>
 <head>
-	<title>Time Calculator</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
-	<style>
-		body {
-			margin: 1em auto;
-			max-width: 45em;
-			font-family: sans-serif;
-			line-height: 1.2;
-			padding: 0.5em;
-		}
-		.allow-overflow {
-			overflow-x: auto;
-			-webkit-overflow-scrolling: touch;
-		}
-		table {
-			white-space: nowrap;
-		}
-		input, button {
-			font-size: inherit;
-		}
-		button {
-			background-color: white;
-			border: 1px solid black;
-		}
-	</style>
-	<script type="text/javascript">
-		function invalidInputsAlert() {
-			window.alert("Your inputs are invalid. Please check them, correct them, and try again.");
-		}
+  <title>Time Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+  <style>
+    body {
+      margin: 1em auto;
+      max-width: 45em;
+      font-family: sans-serif;
+      line-height: 1.2;
+      padding: 0.5em;
+    }
+    .allow-overflow {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      white-space: nowrap;
+    }
+    input, button {
+      font-size: inherit;
+    }
+    button {
+      background-color: white;
+      border: 1px solid black;
+    }
+  </style>
+  <script type="text/javascript">
+    function now(id, format) {
+      console.log(`function now(id: '${id}', format: '${format}')`);
+      let date = new Date();
+      if (format === "datetime") {
+        date = new Date(date.valueOf() - (date.getTimezoneOffset() * 1000 * 60));
+      }
+      let value = '';
+      if (format === 'date') { // "yyyy-MM-dd"
+        value = date.toISOString().split('T')[0];
+      } else if (format === 'datetime') { // "yyyy-MM-ddThh:mm:ss"
+        value = date.toISOString().split('.')[0];
+      } else if (format === 'time') { // "HH:mm:ss"
+        value = date.toTimeString().split(' ')[0];
+      } else {
+        console.error('`format` is invalid');
+      }
+      console.log(value);
+      document.getElementById(id).value = value;
+    }
 
-		function currentTime() {
-			const date = new Date();
-			const time = convertToMinutes(date.getHours() + ":" + date.getMinutes());
-			return convertToFormat(time, true);
-		}
-		
-		function fillInCurrentItem(id) {
-			document.getElementById(id).value = currentTime();
-		}
+    function calculateDiff(startId, endId, outputId) {
+      let startValue = document.getElementById(startId).value;
+      let endValue = document.getElementById(endId).value;
+      if (startValue.length === 0 || endValue.length === 0) {
+        alert(`You're missing some inputs.`);
+        return;
+      }
+      let timePresent = startValue.indexOf(':') !== -1;
+      let datePresent = startValue.indexOf('-') !== -1;
+      if (!datePresent) {
+        startValue = '1970-01-01T' + startValue;
+        endValue = '1970-01-02T' + endValue;
+      }
+      startValue = new Date(startValue);
+      endValue = new Date(endValue);
+      let msDiff = endValue - startValue;
+      if (!datePresent && Math.abs(msDiff) >= 86400000) {
+        msDiff = msDiff % 86400000;
+      }
+      let secondDiff = msDiff / 1000;
+      let minuteDiff = secondDiff / 60;
+      let hourDiff = minuteDiff / 60;
+      let dayDiff = hourDiff / 24;
+      let weekDiff = dayDiff / 7;
+      let monthDiff = dayDiff / 30;
+      let yearDiff = dayDiff / 365;
+      secondDiff = `${secondDiff.toFixed(0)} seconds`;
+      minuteDiff = `${minuteDiff.toFixed(1)} minutes`;
+      hourDiff = `${hourDiff.toFixed(1)} hours`;
+      dayDiff = `${dayDiff.toFixed(1)} days`;
+      weekDiff = `${weekDiff.toFixed(1)} weeks`;
+      monthDiff = `${monthDiff.toFixed(1)} months`;
+      yearDiff = `${yearDiff.toFixed(1)} years`;
+      let output = "";
+      if (timePresent) {
+        output += `${secondDiff}</br>`;
+        output += `${minuteDiff}</br>`;
+        output += `${hourDiff}</br>`;
+        output += `${dayDiff}</br>`;
+      }
+      if (datePresent) {
+        if (!timePresent) {
+          output += `${dayDiff}</br>`;
+        }
+        output += `${weekDiff}</br>`;
+        output += `${monthDiff}</br>`;
+        output += `${yearDiff}</br>`;
+      }
+      document.getElementById(outputId).innerHTML = output;
+    }
 
-		function fillInDate(id) {
-			const now = new Date();
-			now.setHours(now.getHours() - now.getTimezoneOffset() / 60);
-			let date = "";
-			date += now.getFullYear() + "-";
-			if (((now.getMonth() + 1) % 13).toString().length == 1) {
-				date += "0";
-			}
-			date += ((now.getMonth() + 1) % 13) + "-";
-			date += now.getDate();
-			document.getElementById(id).value = date;
-		}
-		
-		function fillInDateTime(id) {
-			let now = new Date();
-			now.setHours(now.getHours() - now.getTimezoneOffset() / 60);
-			document.getElementById(id).value = now.toJSON().substring(0, 19);
-		}
-
-		function calculateDuration(id) {
-			const first = new Date(document.getElementById(id + '_start').value);
-			const second = new Date(document.getElementById(id + '_end').value);
-			const msDiff = second - first;
-			if (isNaN(msDiff)) {
-				invalidInputsAlert();
-				return;
-			}
-			let output = "";
-			output += (msDiff / 1000).toFixed(0) + " seconds</br>";
-			output += (msDiff / 1000 / 60).toFixed(0) + " minutes</br>";
-			output += (msDiff / 1000 / 60 / 60).toFixed(1) + " hours</br>";
-			output += (msDiff / 1000 / 60 / 60 / 24).toFixed(1) + " days</br>";
-			output += (msDiff / 1000 / 60 / 60 / 24 / 7).toFixed(0) + " weeks</br>";
-			output += (msDiff / 1000 / 60 / 60 / 24 / 30).toFixed(1) + " months</br>";
-			output += (msDiff / 1000 / 60 / 60 / 24 / 365).toFixed(1) + " years</br>";
-			document.getElementById(id + '_duration').innerHTML = output;
-		}
-
-		function convertToMinutes(rawValue) {
-			const raw = rawValue.split(':');
-			const minutes = (parseInt(raw[0]) * 60) + parseInt(raw[1]);
-			return minutes;
-		}
-
-		function calculateDiff() {
-			const start = convertToMinutes(document.getElementById('time_start').value);
-			let end = convertToMinutes(document.getElementById('time_end').value);
-			if (isNaN(start) || isNaN(end)) {
-				invalidInputsAlert();
-				return;
-			}
-			while (start > end) {
-				end += 1440;
-			}
-			const diffRaw = Math.abs(end - start);
-			const decimalizedDiffRaw = (diffRaw / 60).toFixed(1);
-			document.getElementById('time_diff').innerHTML = convertToFormat(diffRaw) + ' / ' + decimalizedDiffRaw;
-		}
-
-		function convertToFormat(input, padding) {
-			while (input < 0) {
-				input += 1440;
-			}
-			let hours = Math.floor(input / 60);
-			if (hours < 10 && padding) {
-				hours = '0' + hours;
-			}
-			let minutes = (input % 60).toFixed(0);
-			if (minutes < 10) {
-				minutes = '0' + minutes;
-			}
-			return hours + ":" + minutes;
-		}
-
-		function calculateValue() {
-			const initial = convertToMinutes(document.getElementById('time_value_initial').value);
-			let rawValue = document.getElementById('time_value_value').value;
-			let value;
-			if (rawValue.includes(':')) {
-				value = convertToMinutes(rawValue);
-			} else {
-				value = rawValue * 60;
-			}
-			if (isNaN(initial) || isNaN(value)) {
-				invalidInputsAlert();
-				return;
-			}
-			if (document.getElementById('subtract').checked) {
-				value = -value;
-			}
-			const result = (initial + value) % 1440;
-			document.getElementById('time_value_valueDiff').value = convertToFormat(result, true);
-		}
-
-		function checkVersion() {
-			const currentVersion = "March 20, 2017 at 2:03:45 AM ET";
-			if (localStorage.length === 0) {
-				localStorage["version"] = currentVersion;
-			} else {
-				if (localStorage["version"] !== currentVersion) {
-					localStorage.clear();
-					console.log("Your settings were cleared.");
-					localStorage.version = currentVersion;
-				}
-			}
-		}
-
-		function setDefault(tag) {
-			localStorage[tag] = document.getElementById(tag).value;
-			console.log("Set tag \"" + tag + "\" to: " + localStorage[tag]);
-		}
-
-		function resetSettings() {
-			localStorage.clear();
-		}
-	</script>
+    function addValues(mode) {
+      let initial;
+      initial = document.getElementById(`add_${mode}_initial`).value;
+      let msDiff = 0;
+      if (mode === "time") {
+        initial = new Date('1970-01-01T' + initial);
+      } else if (mode === "datetime") {
+        let timezoneOffset = new Date().getTimezoneOffset() * 1000 * 60;
+        initial = new Date(new Date(initial).valueOf() - timezoneOffset);
+        msDiff += parseFloat(document.getElementById(`add_${mode}_days`).value) * 1000 * 60 * 60 * 24;
+        msDiff += parseFloat(document.getElementById(`add_${mode}_weeks`).value) * 1000 * 60 * 60 * 24 * 7;
+        msDiff += parseFloat(document.getElementById(`add_${mode}_months`).value) * 1000 * 60 * 60 * 24 * 30;
+        msDiff += parseFloat(document.getElementById(`add_${mode}_years`).value) * 1000 * 60 * 60 * 24 * 365;
+      } else {
+        console.error('Invalid addValues mode.');
+        return;
+      }
+      msDiff += parseFloat(document.getElementById(`add_${mode}_seconds`).value) * 1000;
+      msDiff += parseFloat(document.getElementById(`add_${mode}_minutes`).value) * 1000 * 60;
+      msDiff += parseFloat(document.getElementById(`add_${mode}_hours`).value) * 1000 * 60 * 60;
+      msDiff = parseInt(msDiff);
+      if (mode === "time" && document.getElementById('time_subtract').checked) {
+        msDiff = -1 * msDiff;
+      }
+      if (mode === "datetime" && document.getElementById('datetime_subtract').checked) {
+        msDiff = -1 * msDiff;
+      }
+      const finalTime = new Date(initial.valueOf() + msDiff);
+      if (mode === "time") {
+        document.getElementById('add_time_output').value = finalTime.toTimeString().split(' ')[0];
+      } else {
+        document.getElementById('add_datetime_output').value = finalTime.toISOString().split('.')[0]
+      }
+    }
+  </script>
 </head>
 <body>
 <h1>Time Calculator</h1>
-This works best on most mobile browsers and desktop Google Chrome/Chromium (because of their built in date/time pickers).
+<p>This works best on most mobile browsers and desktop Google Chrome/Chromium (because of their built in date/time pickers). This web app assumes you have American locale settings. It probably won't work if you don't have those settings.</p>
+
+<p>Months are 30 days long. Years are 365 days long.</p>
 <hr>
 
 <h2>Difference in Time</h2>
 <div class="allow-overflow">
 <table>
-	<tr>
-		<td>Start:</td>
-		<td><input type="time" id="time_start"></td>
-		<td><button type="button" onclick="fillInCurrentItem('time_start')">Now</button></td>
-		<td><button type="button" onclick="setDefault('time_start')">Set Default</button></td>
-	</tr>
-	<tr>
-		<td>End:</td>
-		<td><input type="time" id="time_end"></td>
-		<td><button type="button" onclick="fillInCurrentItem('time_end')">Now</button></td>
-		<td><button type="button" onclick="setDefault('time_end')">Set Default</button></td>
-	</tr>
-	<tr>
-		<td>Diff:</td>
-		<td><div id="time_diff"></div></td>
-		<td><button type="button" onclick="calculateDiff()">Calculate</button></td>
-	</tr>
+  <tr>
+    <td>Start:</td>
+    <td><input type="time" id="diff_time_start"></td>
+    <td><button type="button" onclick="now('diff_time_start', 'time')">Now</button></td>
+  </tr>
+  <tr>
+    <td>End:</td>
+    <td><input type="time" id="diff_time_end"></td>
+    <td><button type="button" onclick="now('diff_time_end', 'time')">Now</button></td>
+  </tr>
+  <tr>
+    <td valign="top">Diff:</td>
+    <td><div id="diff_time_output"></div></td>
+    <td valign="top"><button type="button" onclick="calculateDiff('diff_time_start', 'diff_time_end', 'diff_time_output')">Calculate</button></td>
+  </tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Difference in Date</h2>
+<div class="allow-overflow">
+<table>
+  <tr>
+    <td>Start:</td>
+    <td><input type="date" id="diff_date_start"></td>
+    <td><button type="button" onclick="now('diff_date_start', 'date')">Now</button></td>
+  </tr>
+  <tr>
+    <td>End:</td>
+    <td><input type="date" id="diff_date_end"></td>
+    <td><button type="button" onclick="now('diff_date_end', 'date')">Now</button></td>
+  </tr>
+  <tr>
+    <td valign="top">Diff:</td>
+    <td><div id="diff_date_output"></div></td>
+    <td valign="top"><button type="button" onclick="calculateDiff('diff_date_start', 'diff_date_end', 'diff_date_output')">Calculate</button></td>
+  </tr>
+</table>
+</div>
+
+<hr>
+
+<h2>Difference in Date/Time</h2>
+<div class="allow-overflow">
+<table>
+  <tr>
+    <td>Start:</td>
+    <td><input type="datetime-local" id="diff_datetime_start"></td>
+    <td><button type="button" onclick="now('diff_datetime_start', 'datetime')">Now</button></td>
+  </tr>
+  <tr>
+    <td>End:</td>
+    <td><input type="datetime-local" id="diff_datetime_end"></td>
+    <td><button type="button" onclick="now('diff_datetime_end', 'datetime')">Now</button></td>
+  </tr>
+  <tr>
+    <td valign="top">Diff:</td>
+    <td><div id="diff_datetime_output"></div></td>
+    <td valign="top"><button type="button" onclick="calculateDiff('diff_datetime_start', 'diff_datetime_end', 'diff_datetime_output')">Calculate</button></td>
+  </tr>
 </table>
 </div>
 
 <hr>
 
 <h2>Add/Subtract Value to Time</h2>
-<p>Format all value inputs as either "[hours]:[minutes]" (such as 2:10, which represents 2 hours and 10 minutes) or "[hours]" (such as 2.5 or 5, which represents 2.5 hours and 5 hours, respectively).</p>
+
 <div class="allow-overflow">
 <table>
-	<tr>
-		<td>Initial:</td>
-		<td><input type="time" id="time_value_initial"></td>
-		<td><button type="button" onclick="fillInCurrentItem('time_value_initial')">Now</button></td>
-		<td><button type="button" onclick="setDefault('time_value_initial')">Set Default</button></td>
-	</tr>
-	<tr>
-		<td>Action:</td>
-		<td><input type="radio" name="action" id="add" checked> Add</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><input type="radio" name="action" id="subtract"> Subtract</td>
-	</tr>
-	<tr>
-		<td>Value:</td>
-		<td><input id="time_value_value" value="0:00" size="5"></td>
-	</tr>
-	<tr>
-		<td>Final:</td>
-		<td><input type="time" id="time_value_valueDiff" disabled></td>
-		<td><button type="button" onclick="calculateValue()">Calculate</button></td>
-	</tr>
+  <tr>
+    <td>Initial:</td>
+    <td><input type="time" id="add_time_initial"></td>
+    <td><button type="button" onclick="now('add_time_initial', 'time')">Now</button></td>
+  </tr>
+  <tr>
+    <td>Action:</td>
+    <td><input type="radio" name="time_action" id="time_add" checked> Add</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input type="radio" name="time_action" id="time_subtract"> Subtract</td>
+  </tr>
+  <tr>
+    <td>Values:</td>
+    <td><input id="add_time_seconds", size=5, value=0> seconds</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_time_minutes", size=5, value=0> minutes</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_time_hours", size=5, value=0> hours</td>
+  </tr>
+  <tr>
+    <td>Final:</td>
+    <td><input type="time" id="add_time_output" disabled></td>
+    <td><button type="button" onclick="addValues('time')">Calculate</button></td>
+  </tr>
 </table>
 </div>
 
 <hr>
 
-<h2>Duration in Dates</h2>
+<h2>Add/Subtract Value to Date/Time</h2>
+Only use whole numbers.
+
 <div class="allow-overflow">
 <table>
-	<tr>
-		<td>Start:</td>
-		<td><input type="date" id="date_start"></td>
-		<td><button type="button" onclick="fillInDate('date_start')">Now</button></td>
-	</tr>
-	<tr>
-		<td>End:</td>
-		<td><input type="date" id="date_end"></td>
-		<td><button type="button" onclick="fillInDate('date_end')">Now</button></td>
-	</tr>
-	<tr>
-		<td valign="top">Duration:</td>
-		<td><div id="date_duration"></div></td>
-		<td valign="top"><button type="button" onclick="calculateDuration('date')">Calculate</button></td>
-	</tr>
-</table>
-</div>
-
-<hr>
-
-<h2>Duration in Dates/Times</h2>
-<div class="allow-overflow">
-<table>
-	<tr>
-		<td>Start:</td>
-		<td><input type="datetime-local" id="datetime_start"></td>
-		<td><button type="button" onclick="fillInDateTime('datetime_start')">Now</button></td>
-	</tr>
-	<tr>
-		<td>End:</td>
-		<td><input type="datetime-local" id="datetime_end"></td>
-		<td><button type="button" onclick="fillInDateTime('datetime_end')">Now</button></td>
-	</tr>
-	<tr>
-		<td valign="top">Duration:</td>
-		<td><div id="datetime_duration"></div></td>
-		<td valign="top"><button type="button" onclick="calculateDuration('datetime')">Calculate</button></td>
-	</tr>
+  <tr>
+    <td>Initial:</td>
+    <td><input type="datetime-local" id="add_datetime_initial"></td>
+    <td><button type="button" onclick="now('add_datetime_initial', 'datetime')">Now</button></td>
+  </tr>
+  <tr>
+    <td>Action:</td>
+    <td><input type="radio" name="datetime_action" id="datetime_add" checked> Add</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input type="radio" name="datetime_action" id="datetime_subtract"> Subtract</td>
+  </tr>
+  <tr>
+    <td>Values:</td>
+    <td><input id="add_datetime_seconds", size=5, value=0> seconds</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_datetime_minutes", size=5, value=0> minutes</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_datetime_hours", size=5, value=0> hours</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_datetime_days", size=5, value=0> days</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_datetime_weeks", size=5, value=0> weeks</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_datetime_months", size=5, value=0> months</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input id="add_datetime_years", size=5, value=0> years</td>
+  </tr>
+  <tr>
+    <td>Final:</td>
+    <td><input type="datetime-local" id="add_datetime_output" disabled></td>
+    <td><button type="button" onclick="addValues('datetime')">Calculate</button></td>
+  </tr>
 </table>
 </div>
 
 <hr>
 
 <p>
-Not my finest work, but it does work. And it's ultra light-weight. As opposed to <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and taking ~9 seconds to load a ~900 KB page on a ~200 Mbps connection.
+Not my finest work, but it does work. And it's ultra light-weight (i.e. just one single ~10 KB file, no tracking what so ever, no libraries used, etc.). As opposed to <a href="https://www.timeanddate.com/date/timeduration.html">this bloated mess</a> that requires POSTing a request and taking ~9 seconds to load a ~900 KB page on a ~200 Mbps connection.
 </p>
-
-<button type="button" onclick="resetSettings()">Reset All Settings</button>
-
-<script>
-	checkVersion();
-
-	const elements = ["time_start", "time_end", "time_value_initial"];
-	elements.forEach(item => {
-		if (localStorage[item] === undefined) {
-			document.getElementById(item).value = currentTime();
-		} else {
-			document.getElementById(item).value = localStorage[item];
-		}
-	})
-
-	calculateDiff();
-</script>
 </body>
 </html>
