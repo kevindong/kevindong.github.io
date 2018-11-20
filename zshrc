@@ -1,5 +1,6 @@
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="risto"
+DISABLE_AUTO_UPDATE=true
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 alias cs="ssh dong70@data.cs.purdue.edu"

@@ -1,0 +1,7 @@
+[1mtmux shortcuts[0m
+[1mStart new session:[0m    tmux new -s [name]
+[1mReattach to session:[0m  tmux a -t [name]
+[1mDetach from session:[0m  ^b d (press Ctrl-b, release, then press d)
+[1mKill session:[0m         tmux kill-session -t [name]
+[1mList sessions:[0m        tmux ls
+
