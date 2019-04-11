@@ -10,6 +10,7 @@
       font-size: 16px;
       line-height: 1.2;
       padding: 0.5em;
+      text-align: center;
     }
     .allow-overflow {
       overflow-x: auto;
@@ -18,7 +19,7 @@
     input, button, textarea {
       font-size: inherit;
     }
-    textarea {
+    textarea, img {
       width: 100%;
     }
     button {
@@ -30,13 +31,7 @@
   <script type="text/javascript">
     function spongebob(text) {
       let charArray = text.split("");
-      charArray = charArray.map(x => {
-        if (Math.random() < 0.5) {
-          return x.toUpperCase();
-        } else {
-          return x.toLowerCase();
-        }
-      })
+      charArray = charArray.map(x => Math.random() < 0.5 ? x.toUpperCase() : x.toLowerCase());
       return charArray.join("");
     }
 
@@ -49,7 +44,9 @@
 </head>
 <body>
 <h1>Spongebob Meme Text Generator</h1>
-
+<img src="mocking-spongebob.jpg">
+</br>
+</br>
 <textarea id="inputText" rows="5"></textarea>
 </br>
 </br>
