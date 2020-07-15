@@ -7,6 +7,7 @@
 * `curl -L http://install.ohmyz.sh | sh`: installs oh my zsh
 * `chsh -s /bin/zsh`: change default shell
 * `curl -L kevindong.net/vimrc -o ~/.vimrc`: have some sane vim settings
+* `curl -L kevindong.net/kevin.zsh-theme -o ~/.oh-my-zsh/themes/kevin.zsh-theme`: download custom zsh theme
 * `curl -L kevindong.net/zshrc -o ~/.zshrc`: have some sane zsh settings
 * `ssh-keygen -t rsa -b 4096`: generate SSH keys
 * `eval "$(ssh-agent -s)"`
